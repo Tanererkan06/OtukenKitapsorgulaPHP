@@ -3,6 +3,10 @@
 <html>
 <html>
 <head>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.11.custom.min.js"></script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 * {
@@ -46,10 +50,11 @@
 ÖTÜKEN KİTAP SORGULA
 <br/><br/>
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Yazar Arayın" title="Type in a name">
+ 
 
-<?php
-require_once "PHPExcel/Classes/PHPExcel.php";
-		$tmpfname = "./products2.xls";
+<?php require_once "PHPExcel/Classes/PHPExcel.php";
+      
+$tmpfname = "./products2.xlsx";//products2.xls
 		$excelReader = PHPExcel_IOFactory::createReaderForFile($tmpfname);
 		$excelObj = $excelReader->load($tmpfname);
 		$worksheet = $excelObj->getSheet(0);
@@ -58,14 +63,31 @@ require_once "PHPExcel/Classes/PHPExcel.php";
     
 
 		
-		echo "<table id='myTable' border='1' width='500'>";
+		echo "<table id='myTable' border='1' width='1500'>";
 		for ($row = 1; $row <= $lastRow; $row++) { 
 			 
- 			 echo "<tr><td>";echo $worksheet->getCell('D'.$row)->getValue();echo "</td>";
-			echo "<td>"; echo $worksheet->getCell('C'.$row)->getValue();echo "</td>";
-			echo "<td>"; echo $worksheet->getCell('E'.$row)->getValue();echo "</td>";
-			echo "<td>"; echo $worksheet->getCell('F'.$row)->getValue();echo "</td>";
-			echo "<td>";  echo $worksheet->getCell('G'.$row)->getValue();echo "</td></tr>";	 	 
+        echo "<tr><td>";
+        echo $worksheet->getCell('K'.$row)->getValue();
+        echo "</td>";
+      
+        echo "<td>"; 
+        echo $worksheet->getCell('C'.$row)->getValue();
+        echo "</td>";
+        
+        echo "<td>"; 
+        echo "<img src=";echo $worksheet->getCell('N'.$row)->getValue();echo "/>";
+        echo "</td>";
+
+      echo "<td>"; echo $worksheet->getCell('F'.$row)->getValue();echo " TL </td>";
+      echo "<td><b>";  
+      echo $worksheet->getCell('O'.$row)->getValue(); 
+       
+      echo "Satışta Var Mı ? (y)es / (n)o : ";
+      echo $worksheet->getCell('I'.$row)->getValue();
+      echo "</b>";	 	
+     
+      echo "</td></tr>";	 	
+ 
 		}
 		echo "</table>";	
 		
